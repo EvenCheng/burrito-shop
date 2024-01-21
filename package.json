@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npx ts-node src/app.ts",
-    "test": "jest --detectOpenHandles",
+    "test": "jest",
     "build": "docker build -t burrito-shop ."
   },
   "keywords": [],

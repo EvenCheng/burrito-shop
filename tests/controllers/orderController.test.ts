@@ -8,7 +8,7 @@ describe('OrderController', () => {
   it('should return 401 if the API key is disabled', async () => {
     const response = await request(app)
       .get('/api/orders')
-      .set('Authorization', 'Bearer apiKey2');
+      .set('Authorization', 'Bearer apiKeyDiabled');
 
     expect(response.status).toBe(401);
     expect(response.body).toEqual({ error: 'Invalid API key' });
@@ -26,7 +26,7 @@ describe('OrderController', () => {
   it('should submit a new order', async () => {
     const response = await request(app)
       .post('/api/orders')
-      .set('Authorization', 'Bearer apiKey1')
+      .set('Authorization', 'Bearer apiKeyEnabled')
       .send({
         items: [
           { burritoId: 1, quantity: 2, size: 'Regular', chosenOptions: ['Black Olives', 'Sour Cream'] },
@@ -37,10 +37,24 @@ describe('OrderController', () => {
     // Add more expectations based on your API response
   });
 
+  it('should return 400 for submitting an order with invalid burritoId', async () => {
+    const orderData = [
+      { burritoId: 999, quantity: 1, size: 'Regular', chosenOptions: ['Black Olives'] },
+    ];
+
+    const response = await request(app)
+      .post('/api/orders')
+      .send({ items: orderData })
+      .set('Authorization', 'Bearer apiKeyEnabled');
+
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({ message: 'Invalid burritoId: 999' });
+  });
+
   it('should get all orders', async () => {
     const response = await request(app)
       .get('/api/orders')
-      .set('Authorization', 'Bearer apiKey1');
+      .set('Authorization', 'Bearer apiKeyEnabled');
 
     expect(response.status).toEqual(200);
     // Add more expectations based on your API response
@@ -50,7 +64,7 @@ describe('OrderController', () => {
     const orderId = 1; // Replace with an existing order ID
     const response = await request(app)
       .get(`/api/orders/${orderId}`)
-      .set('Authorization', 'Bearer apiKey1');
+      .set('Authorization', 'Bearer apiKeyEnabled');
 
     expect(response.status).toEqual(200);
     // Add more expectations based on your API response
@@ -60,7 +74,7 @@ describe('OrderController', () => {
     const orderId = 999; // Replace with an existing order ID
     const response = await request(app)
       .get(`/api/orders/${orderId}`)
-      .set('Authorization', 'Bearer apiKey1');
+      .set('Authorization', 'Bearer apiKeyEnabled');
 
     expect(response.status).toEqual(404);
     expect(response.body).toEqual({"error": "Order not found"});

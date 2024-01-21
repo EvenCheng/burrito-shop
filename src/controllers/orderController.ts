@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import * as orderService from '../../services/orderService';
+import * as orderService from '../services/orderService';
 
 // Controller function to submit an order
 export const submitOrderController = (req: Request, res: Response): void => {

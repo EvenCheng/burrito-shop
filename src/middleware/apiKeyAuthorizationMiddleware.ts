@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 
 const apiKeys: { [key: string]: boolean } = {
-  "apiKey1": true,
-  "apiKey2": false,
+  "apiKeyEnabled": true,
+  "apiKeyDisabled": false,
   "b7f930d00b914d9db909d97cb1f3a6e6": true,
   // Add more API keys as needed
 };
