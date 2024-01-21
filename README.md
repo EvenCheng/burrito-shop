@@ -13,6 +13,33 @@ The project has the following folder structure:
   - **services**: Contains business logic and data processing.
 - **tests**: Holds Jest test cases for the application.
 
+## Authorization
+
+To access the secure routes of the API, you need to include your API key in the `Authorization` header using the "Bearer" scheme and provide the hardcoded key `b7f930d00b914d9db909d97cb1f3a6e6`. See `apiKeyAuthorizationMiddleware.ts` for how it's implemented
+
+### Example using cURL
+
+```bash
+curl -X GET \
+  http://localhost:3000/api/orders \
+  -H 'Authorization: Bearer b7f930d00b914d9db909d97cb1f3a6e6'
+```
+
+### Example using Postman
+
+1. Open Postman and create a new request.
+2. Set the request method to `GET`.
+3. Enter the request URL: `http://localhost:3000/api/orders`.
+4. In the Headers section, add a new header:
+   - Key: `Authorization`
+   - Value: `Bearer b7f930d00b914d9db909d97cb1f3a6e6`.
+
+Click "Send" to make the request.
+
+Make sure to use a valid API key from the list of authorized keys in the `apiKeyAuthorizationMiddleware.ts` file.
+
+Enjoy ordering delicious burritos from the Burrito Shop API!
+
 ## How to Run the Application Server Locally
 
 1. Install Node.js and npm.
@@ -81,6 +108,8 @@ The project has the following folder structure:
 
 1. **Node.js and npm are installed**: The setup assumes that Node.js and npm are installed on the system.
 
-2. **Static data for testing**: The README assumes static dummy data for orders and burritos is used for testing purposes. In a real-world scenario, this data would come from a database.
+2. **Static data for testing**: The work here assumes static dummy data for orders and burritos is used for testing purposes. In a real-world scenario, this data would come from a database.
 
 3. **Application runs on port 3000**: The instructions assume the application runs on port 3000. Make sure the port is available and not in use by another application.
+
+4. **Use of hardcoded API key**: This project uses API keys for simplicity in demonstrating authorization. In a real-world scenario, API key-based authorization might not be the most secure solution, especially for production environments. It is recommended to implement more robust and secure authentication mechanisms, such as OAuth 2.0 or JWT, based on the specific security requirements of your application.
